@@ -4,7 +4,7 @@ const express = require('express')
 const passport = require('passport')
 
 // pull in Mongoose model for patients
-const patient = require('../models/patient')
+const Patient = require('../models/patient')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -30,7 +30,7 @@ const router = express.Router()
 // INDEX
 // GET /examples
 router.get('/patients', requireToken, (req, res, next) => {
-  patient.find()
+  Patient.find()
     .populate('owner')
     .then(patients => {
       // `patients` will be an array of Mongoose documents
@@ -48,7 +48,7 @@ router.get('/patients', requireToken, (req, res, next) => {
 // GET /patients/5a7db6c74d55bc51bdf39793
 router.get('/patients/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  patient.findById(req.params.id)
+  Patient.findById(req.params.id)
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "patient" JSON
     .then(patient => res.status(200).json({ patient: patient.toObject() }))
@@ -61,10 +61,11 @@ router.get('/patients/:id', requireToken, (req, res, next) => {
 router.post('/patients', requireToken, (req, res, next) => {
   // set owner of new patient to be current user
   req.body.patient.owner = req.user.id
-
-  patient.create(req.body.patient)
+  console.log('create a Patient')
+  Patient.create(req.body.patient)
     // respond to succesful `create` with status 201 and JSON of new "patient"
-    .then(patient => patient.findById(patient._id).populate('owner'))
+    // .then(patient => Patient.findById(patient._id).populate('owner'))
+
     .then(patient => {
       res.status(201).json({ patient: patient.toObject() })
     })
@@ -81,7 +82,7 @@ router.patch('/patients/:id', requireToken, removeBlanks, (req, res, next) => {
   // owner, prevent that by deleting that key/value pair
   delete req.body.patient.owner
 
-  patient.findById(req.params.id)
+  Patient.findById(req.params.id)
     .then(handle404)
     .then(patient => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
@@ -100,7 +101,7 @@ router.patch('/patients/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE /patients/5a7db6c74d55bc51bdf39793
 router.delete('/patients/:id', requireToken, (req, res, next) => {
-  patient.findById(req.params.id)
+  Patient.findById(req.params.id)
     .then(handle404)
     .then(patient => {
       // throw an error if current user doesn't own `patient`
