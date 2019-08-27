@@ -61,10 +61,10 @@ router.get('/patients/:id', requireToken, (req, res, next) => {
 router.post('/patients', requireToken, (req, res, next) => {
   // set owner of new patient to be current user
   req.body.patient.owner = req.user.id
-  console.log('create a Patient')
+  // console.log('create a Patient')
   Patient.create(req.body.patient)
     // respond to succesful `create` with status 201 and JSON of new "patient"
-    // .then(patient => Patient.findById(patient._id).populate('owner'))
+    .then(patient => Patient.findById(patient._id).populate('owner'))
 
     .then(patient => {
       res.status(201).json({ patient: patient.toObject() })
