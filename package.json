@@ -1,10 +1,10 @@
 {
-  "name": "express-api-template",
+  "name": "capstone-project-api",
   "version": "0.0.1",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "mocha --exit",
     "server": "nodemon server.js",
     "serve": "nodemon server.js",
