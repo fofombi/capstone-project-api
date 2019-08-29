@@ -107,7 +107,7 @@ router.delete('/patients/:id', requireToken, (req, res, next) => {
       // throw an error if current user doesn't own `patient`
       requireOwnership(req, patient)
       // delete the patient ONLY IF the above didn't throw
-      patient.remove()
+      patient.delete()
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
