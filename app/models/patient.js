@@ -26,11 +26,11 @@ const patientSchema = new mongoose.Schema({
   },
   // Here the Date is a string because this could allow the tech, to give more details on the collection Date and the service Date.
   collectionDate: {
-    type: String,
+    type: Date,
     required: true
   },
   serviceDate: {
-    type: String,
+    type: Date,
     required: true
   },
 

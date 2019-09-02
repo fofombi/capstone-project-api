@@ -17,7 +17,7 @@ curl "${API}${URL_PATH}/${ID}" \
               "grossDescription": "'"${TEXT}"'",
                 "collectionDate": "'"${C_DATE}"'",
                   "serviceDate": "'"${S_DATE}"'",
-                    "result": "'"${RESULT}"'"
+                    
 
 
 
